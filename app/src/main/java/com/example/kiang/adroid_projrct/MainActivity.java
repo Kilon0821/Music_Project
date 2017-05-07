@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         Button Submit = (Button)findViewById(R.id.button);
 
         Submit.setOnClickListener(new View.OnClickListener()
@@ -41,6 +41,16 @@ public class MainActivity extends AppCompatActivity {
             {
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this,Main2Activity.class);
+                startActivity(intent);
+            }
+        });
+
+        final Button music=(Button)findViewById(R.id.to_music);
+        music.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent();
+                intent.setClass(MainActivity.this,Music.class);
                 startActivity(intent);
             }
         });

@@ -20,5 +20,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="OnTouchListener" />
+
+        <Button
+            android:id="@+id/to_music"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="MUSIC GO!" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
