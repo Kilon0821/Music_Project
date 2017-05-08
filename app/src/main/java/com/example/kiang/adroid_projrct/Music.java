@@ -29,6 +29,7 @@ public class Music extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
         music1_star=(Button)findViewById(R.id.music1_btn_star);
         music1_star.setOnClickListener(new View.OnClickListener() {
             @Override
