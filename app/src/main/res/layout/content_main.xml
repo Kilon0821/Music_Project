@@ -19,12 +19,24 @@
             android:id="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="OnTouchListener" />
+            android:text="OnTouchListener"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="0dp" />
 
         <Button
             android:id="@+id/to_music"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="MUSIC GO!" />
+            android:text="MUSIC GO!"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="0dp" />
+
+        <Button
+            android:id="@+id/to_music2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Relax Music!"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="0dp" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

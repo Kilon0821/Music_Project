@@ -54,6 +54,16 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        final Button music2=(Button)findViewById(R.id.to_music2);
+        music2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent();
+                intent.setClass(MainActivity.this,Music2.class);
+                startActivity(intent);
+            }
+        });
     }
 
 

@@ -26,6 +26,10 @@
         <activity
             android:name=".Music"
             android:label="@string/title_activity_music"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Music2"
+            android:label="@string/title_activity_music2"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
