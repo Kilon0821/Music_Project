@@ -2,6 +2,8 @@ package com.example.kiang.adroid_projrct;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
+import android.support.constraint.solver.widgets.ConstraintAnchor;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -10,10 +12,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 public class Main2Activity extends AppCompatActivity {
 
     public EditText X,Y;
+    public ImageView IV;
+    public ConstraintLayout CL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +28,8 @@ public class Main2Activity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         X = (EditText)findViewById(R.id.editText);
         Y = (EditText)findViewById(R.id.editText2);
+        IV = (ImageView)findViewById(R.id.imageView);
+        CL = (ConstraintLayout)findViewById(R.id.screen);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -51,15 +58,17 @@ public class Main2Activity extends AppCompatActivity {
     @Override
     public boolean onTouchEvent(MotionEvent event)
     {
-        int x = (int) event.getX();
-        int y = (int) event.getY();
+        float x = event.getX();
+        float y = event.getY();
+        IV.setX(10000);
+        IV.setY(10000);
         try
         {
             switch(event.getAction())
             {
-                case MotionEvent.ACTION_DOWN: X.setText(""+x);Y.setText(""+y);break;
+                case MotionEvent.ACTION_DOWN: X.setText(""+x);Y.setText(""+y);IV.setX(x-50);IV.setY(y-270);break;
                 case MotionEvent.ACTION_UP:X.setText(""+x);Y.setText(""+y);break;
-                case MotionEvent.ACTION_MOVE:X.setText(""+x);Y.setText(""+y);break;
+                case MotionEvent.ACTION_MOVE:X.setText(""+x);Y.setText(""+y);IV.setX(x-50);IV.setY(y-270);break;
             }
             return true;
         }
