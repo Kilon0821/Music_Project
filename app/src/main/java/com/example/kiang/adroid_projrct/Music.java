@@ -2,17 +2,25 @@ package com.example.kiang.adroid_projrct;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SeekBar;
+
+import javax.xml.datatype.Duration;
 
 public class Music extends AppCompatActivity {
 
     private MediaPlayer player;
+    SeekBar seekBar;
+    int Duration;
     Button music1_star,music1_pause,music_stop;
+    Handler handler=new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +43,8 @@ public class Music extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try{
-                    player.start();
+   //                 player.start();
+                    handler.post(start);
                 }catch(Exception e){}
 
             }
@@ -60,12 +69,49 @@ public class Music extends AppCompatActivity {
                 }catch (Exception e){}
             }
         });
+        player= MediaPlayer.create(this,R.raw.some_body_hurt_my_dick);
+
+        Duration=player.getDuration();
+        seekBar=(SeekBar)findViewById(R.id.SB);
+        seekBar.setMax(Duration);
+
+        SeekBar.OnSeekBarChangeListener sblist=new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                player.seekTo(seekBar.getProgress());
+            }
+        };
 
     }
 
+    Runnable start=new Runnable() {
+        @Override
+        public void run() {
+            player.start();
+            handler.post(updateSeekbar);
+        }
+    };
+    Runnable updateSeekbar=new Runnable() {
+        @Override
+        public void run() {
+            seekBar.setProgress(player.getCurrentPosition());
+            handler.postDelayed(updateSeekbar,1000);
+        }
+    };
+
     public void onResume(){
         super.onResume();
-        player= MediaPlayer.create(this,R.raw.some_body_hurt_my_dick);
+       player= MediaPlayer.create(this,R.raw.some_body_hurt_my_dick);
         player.setOnCompletionListener(comL);
     }
 
