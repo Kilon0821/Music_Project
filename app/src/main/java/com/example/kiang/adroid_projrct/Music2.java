@@ -1,5 +1,6 @@
 package com.example.kiang.adroid_projrct;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -8,10 +9,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 public class Music2 extends AppCompatActivity {
 
     private MediaPlayer player;
+    SeekBar seekBar2;
     Button music2_start,music2_pause,music2_stop;
 
     @Override
@@ -61,6 +65,32 @@ public class Music2 extends AppCompatActivity {
         }
     });
 
+
+        final AudioManager audioManager=(AudioManager)getSystemService(AUDIO_SERVICE);
+        int max=audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        final int currentVolume=audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+
+        seekBar2=(SeekBar)findViewById(R.id.SB2);
+        seekBar2.setMax(max);
+        seekBar2.setProgress(currentVolume);
+
+        seekBar2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,progress,0);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar2) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar2) {
+
+            }
+
+        });
 }
 
     public void onResume(){
