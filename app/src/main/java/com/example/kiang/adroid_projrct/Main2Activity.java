@@ -1,6 +1,10 @@
 package com.example.kiang.adroid_projrct;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.Icon;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.solver.widgets.ConstraintAnchor;
@@ -14,45 +18,33 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import java.util.Random;
+
 public class Main2Activity extends AppCompatActivity {
 
-    public EditText X,Y;
+    public MediaPlayer MC = new MediaPlayer();
+    public MediaPlayer[] Player = {MC,MC,MC,MC,MC};
     public ImageView IV;
     public ConstraintLayout CL;
+    public Random rand = new Random();
+    public int[] Background = {R.mipmap.river,R.mipmap.bird,R.mipmap.forest,R.mipmap.rain,R.mipmap.beach};
+    public int Num;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        X = (EditText)findViewById(R.id.editText);
-        Y = (EditText)findViewById(R.id.editText2);
         IV = (ImageView)findViewById(R.id.imageView);
         CL = (ConstraintLayout)findViewById(R.id.screen);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        Player[0] = MediaPlayer.create(this,R.raw.background);
+        Player[1] = MediaPlayer.create(this,R.raw.bird);
+        Player[2] = MediaPlayer.create(this,R.raw.bug);
+        Player[3] = MediaPlayer.create(this,R.raw.rain);
+        Player[4] = MediaPlayer.create(this,R.raw.sea);
 
-        Intent intent = getIntent();
-        Button Submit = (Button)findViewById(R.id.button);
-
-        Submit.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Intent intent = new Intent();
-                intent.setClass(Main2Activity.this,MainActivity.class);
-                startActivity(intent);
-            }
-        });
+        IV.setY(259*3);
+        IV.setX(168*3);
     }
 
     @Override
@@ -60,15 +52,27 @@ public class Main2Activity extends AppCompatActivity {
     {
         float x = event.getX();
         float y = event.getY();
-        IV.setX(10000);
-        IV.setY(10000);
         try
         {
             switch(event.getAction())
             {
-                case MotionEvent.ACTION_DOWN: X.setText(""+x);Y.setText(""+y);IV.setX(x-50);IV.setY(y-270);break;
-                case MotionEvent.ACTION_UP:X.setText(""+x);Y.setText(""+y);break;
-                case MotionEvent.ACTION_MOVE:X.setText(""+x);Y.setText(""+y);IV.setX(x-50);IV.setY(y-270);break;
+                case MotionEvent.ACTION_DOWN:
+                    Num = rand.nextInt(5)+0;
+                    Player[Num].start();
+                    if(Background[Num] == 0) CL.setBackgroundColor(Color.BLUE);
+                    else CL.setBackgroundResource(Background[Num]);
+                    IV.setX(x-40);
+                    IV.setY(y-125);
+                    break;
+                case MotionEvent.ACTION_UP:
+                    Player[Num].stop();
+                    Player[Num].prepare();
+                    CL.setBackgroundColor(Color.WHITE);
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    IV.setX(x-40);
+                    IV.setY(y-125);
+                    break;
             }
             return true;
         }
