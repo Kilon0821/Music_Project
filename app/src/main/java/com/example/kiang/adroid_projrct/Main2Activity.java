@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
@@ -29,6 +30,7 @@ public class Main2Activity extends AppCompatActivity {
     public Random rand = new Random();
     public int[] Background = {R.mipmap.river,R.mipmap.bird,R.mipmap.forest,R.mipmap.rain,R.mipmap.beach};
     public int Num;
+    public AudioManager am;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +38,13 @@ public class Main2Activity extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
         IV = (ImageView)findViewById(R.id.imageView);
         CL = (ConstraintLayout)findViewById(R.id.screen);
-
         Player[0] = MediaPlayer.create(this,R.raw.background);
         Player[1] = MediaPlayer.create(this,R.raw.bird);
         Player[2] = MediaPlayer.create(this,R.raw.bug);
         Player[3] = MediaPlayer.create(this,R.raw.rain);
         Player[4] = MediaPlayer.create(this,R.raw.sea);
 
+        am=(AudioManager)getSystemService(AUDIO_SERVICE);
         IV.setY(259*3);
         IV.setX(168*3);
     }
@@ -52,6 +54,7 @@ public class Main2Activity extends AppCompatActivity {
     {
         float x = event.getX();
         float y = event.getY();
+        int temp=0;
         try
         {
             switch(event.getAction())
@@ -73,6 +76,9 @@ public class Main2Activity extends AppCompatActivity {
                 case MotionEvent.ACTION_MOVE:
                     IV.setX(x-40);
                     IV.setY(y-125);
+                    temp=(int)y/100;
+                    am.setStreamVolume(AudioManager.STREAM_MUSIC,temp,0);
+
                     break;
             }
             return true;
