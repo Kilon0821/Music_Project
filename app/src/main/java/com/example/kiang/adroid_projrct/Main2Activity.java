@@ -58,6 +58,7 @@ public class Main2Activity extends AppCompatActivity {
             {
                 case MotionEvent.ACTION_DOWN:
                     Num = rand.nextInt(5)+0;
+                    Player[Num].seekTo(0);
                     Player[Num].start();
                     if(Background[Num] == 0) CL.setBackgroundColor(Color.BLUE);
                     else CL.setBackgroundResource(Background[Num]);
