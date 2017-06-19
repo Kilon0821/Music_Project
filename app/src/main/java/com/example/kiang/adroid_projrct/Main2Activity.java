@@ -2,6 +2,7 @@ package com.example.kiang.adroid_projrct;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
 import android.media.AudioManager;
@@ -13,8 +14,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -31,6 +35,7 @@ public class Main2Activity extends AppCompatActivity {
     public int[] Background = {R.mipmap.river,R.mipmap.bird,R.mipmap.forest,R.mipmap.rain,R.mipmap.beach};
     public int Num;
     public AudioManager am;
+    public Animation set;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +43,9 @@ public class Main2Activity extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
         IV = (ImageView)findViewById(R.id.imageView);
         CL = (ConstraintLayout)findViewById(R.id.screen);
+        set = new AlphaAnimation(0.1f,1.0f);
+        set.setDuration(3000);
+
         Player[0] = MediaPlayer.create(this,R.raw.background);
         Player[1] = MediaPlayer.create(this,R.raw.bird);
         Player[2] = MediaPlayer.create(this,R.raw.bug);
@@ -52,8 +60,8 @@ public class Main2Activity extends AppCompatActivity {
     @Override
     public boolean onTouchEvent(MotionEvent event)
     {
-        float x = event.getX();
-        float y = event.getY();
+        int x = (int) event.getX();
+        int y = (int) event.getY();
         int temp=0;
         try
         {
@@ -63,8 +71,8 @@ public class Main2Activity extends AppCompatActivity {
                     Num = rand.nextInt(5)+0;
                     Player[Num].seekTo(0);
                     Player[Num].start();
-                    if(Background[Num] == 0) CL.setBackgroundColor(Color.BLUE);
-                    else CL.setBackgroundResource(Background[Num]);
+                    CL.setAnimation(set);
+                    CL.setBackgroundResource(Background[Num]);
                     IV.setX(x-40);
                     IV.setY(y-125);
                     break;
@@ -72,13 +80,15 @@ public class Main2Activity extends AppCompatActivity {
                     Player[Num].stop();
                     Player[Num].prepare();
                     CL.setBackgroundColor(Color.WHITE);
+                    set.reset();
+                    set = new AlphaAnimation(0.1f,1.0f);
+                    set.setDuration(3000);
                     break;
                 case MotionEvent.ACTION_MOVE:
                     IV.setX(x-40);
                     IV.setY(y-125);
                     temp=(int)y/100;
                     am.setStreamVolume(AudioManager.STREAM_MUSIC,temp,0);
-
                     break;
             }
             return true;

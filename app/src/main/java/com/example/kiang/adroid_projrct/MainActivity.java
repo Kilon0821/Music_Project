@@ -22,9 +22,12 @@ public class MainActivity extends AppCompatActivity {
 
         final Intent intent = getIntent();
         Button Submit = (Button)findViewById(R.id.button);
+        TextView TV = (TextView)findViewById(R.id.textView);
 
         Submit.setX(117*3);
         Submit.setY(417*3);
+        TV.setX(116*3);
+        TV.setY(111*3);
 
         Submit.setOnClickListener(new View.OnClickListener()
         {
